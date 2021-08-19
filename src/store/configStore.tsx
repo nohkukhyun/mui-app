@@ -2,10 +2,11 @@ import { combineReducers } from 'redux'
 import createSagaMiddleware from '@redux-saga/core'
 import { configureStore } from '@reduxjs/toolkit'
 import rootSaga from './rootSaga'
+import photoSlice from 'features/photoSlice/photoSlice'
 
 const sagaMiddleWare = createSagaMiddleware()
 const reducers = combineReducers({
-  // ...todo
+  photo: photoSlice.reducer,
 })
 
 const createStore = () => {
