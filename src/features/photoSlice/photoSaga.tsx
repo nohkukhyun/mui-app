@@ -1,6 +1,6 @@
 import { PayloadAction } from '@reduxjs/toolkit'
 import axios from 'axios'
-import { call, put, takeEvery } from 'redux-saga/effects'
+import { call, put, takeEvery, all } from 'redux-saga/effects'
 import {
   IPhotoState,
   requestPhotoListSuccess,
@@ -16,7 +16,10 @@ export const photoAPI = async () => {
   return result
 }
 
-function* photoSaga() {
+// action todo...
+// export const
+
+export function* photoSaga(action: PayloadAction) {
   yield put(requestPhotoList())
   try {
     const res: IPhotoState[] = yield call(photoAPI)
@@ -26,4 +29,8 @@ function* photoSaga() {
   }
 }
 
-export default photoSaga
+function* watchPhotoSaga() {
+  // yield all([takeEvery('REQUEST_PHOTO_LIST', photoSaga())])
+}
+
+export default watchPhotoSaga
