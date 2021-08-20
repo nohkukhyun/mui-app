@@ -11,8 +11,8 @@ import {
 export const photoAPI = async () => {
   const result = await axios({
     method: 'get',
-    url: 'https://jsonplaceholder.typicode.com/',
-  })
+    url: 'https://jsonplaceholder.typicode.com/photos',
+  }).then((res) => res.data)
   return result
 }
 
