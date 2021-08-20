@@ -1,5 +1,5 @@
-import { PayloadAction } from '@reduxjs/toolkit'
-import axios from 'axios'
+import { createAction, PayloadAction } from '@reduxjs/toolkit'
+import axios, { AxiosError } from 'axios'
 import { call, put, takeEvery, all } from 'redux-saga/effects'
 import {
   IPhotoState,
@@ -17,9 +17,19 @@ export const photoAPI = async () => {
 }
 
 // action todo...
-// export const
+// export const requestLineItemListAsync = () => {(
+//   '@delivery/REQUEST_LINE_ITEM_LIST',
+//   '@delivery/LINE_ITEM_LIST_SUCCESS',
+//   '@delivery/LINE_ITEM_LIST_FAILURE'
+// )}<undefined, IPhotoState[], AxiosError | Error>()
 
-export function* photoSaga(action: PayloadAction) {
+// export const actions = {
+//   requestLineItemListAsync,
+// }
+
+export const photoSagaAction = createAction<null>('photo/photoList')
+
+function* photoSaga(action: PayloadAction) {
   yield put(requestPhotoList())
   try {
     const res: IPhotoState[] = yield call(photoAPI)
