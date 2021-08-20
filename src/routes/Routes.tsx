@@ -1,18 +1,22 @@
+import Layout from 'layout/Layout'
 import { Suspense, lazy } from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
-const PhotoPage = lazy(() => import('domain/photoPage'))
-const MainPage = lazy(() => import('domain/mainPage'))
+// code splitting
+const PhotoPage = lazy(() => import('domain/photo'))
+const MainPage = lazy(() => import('domain/main'))
 
 const Routes = () => {
   return (
     <BrowserRouter>
-      <Suspense fallback={null}>
-        <Switch>
-          <Route exact path="/" component={MainPage} />
-          <Route exact path="/photo" component={PhotoPage} />
-        </Switch>
-      </Suspense>
+      <Layout>
+        <Suspense fallback={null}>
+          <Switch>
+            <Route exact path="/" component={MainPage} />
+            <Route exact path="/photo" component={PhotoPage} />
+          </Switch>
+        </Suspense>
+      </Layout>
     </BrowserRouter>
   )
 }
