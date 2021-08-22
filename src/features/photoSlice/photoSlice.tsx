@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
-import React from 'react'
 
 export interface IPhotoState {
   albumId: number
@@ -22,6 +21,10 @@ const initialState = {
   loading: false,
 } as IPhotoInitialState
 
+export const photoActions = {
+  requestPhoto: 'photo/requestPhoto',
+}
+
 const photoSlice = createSlice({
   name: 'photo',
   initialState,
@@ -31,14 +34,14 @@ const photoSlice = createSlice({
     },
     requestPhotoListSuccess: (
       state: IPhotoInitialState,
-      action: PayloadAction<any>,
+      action: PayloadAction<IPhotoState[]>,
     ) => {
       state.loading = false
       state.photoList = action.payload
     },
-    requestPhotoLustFailure: (
+    requestPhotoListFailure: (
       state: IPhotoInitialState,
-      action: PayloadAction<any>,
+      action: PayloadAction<AxiosError>,
     ) => {
       state.loading = false
       state.error = action.payload
@@ -49,7 +52,7 @@ const photoSlice = createSlice({
 export const {
   requestPhotoList,
   requestPhotoListSuccess,
-  requestPhotoLustFailure,
+  requestPhotoListFailure,
 } = photoSlice.actions
 
 export default photoSlice

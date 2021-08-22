@@ -1,12 +1,13 @@
-import { createAction, PayloadAction } from '@reduxjs/toolkit'
-import axios, { AxiosError } from 'axios'
-import { call, put, takeEvery, all } from 'redux-saga/effects'
+import { PayloadAction } from '@reduxjs/toolkit'
+import axios from 'axios'
+import { call, put, takeEvery, all, takeLatest } from 'redux-saga/effects'
 import {
   IPhotoState,
   requestPhotoListSuccess,
-  requestPhotoList,
-  requestPhotoLustFailure,
+  requestPhotoListFailure,
+  photoActions,
 } from './photoSlice'
+import photoSlice from './photoSlice'
 
 export const photoAPI = async () => {
   const result = await axios({
@@ -16,31 +17,20 @@ export const photoAPI = async () => {
   return result
 }
 
-// action todo...
-// export const requestLineItemListAsync = () => {(
-//   '@delivery/REQUEST_LINE_ITEM_LIST',
-//   '@delivery/LINE_ITEM_LIST_SUCCESS',
-//   '@delivery/LINE_ITEM_LIST_FAILURE'
-// )}<undefined, IPhotoState[], AxiosError | Error>()
+export type PhotoAction = PayloadAction<typeof photoSlice.actions>
 
-// export const actions = {
-//   requestLineItemListAsync,
-// }
-
-export const photoSagaAction = createAction<null>('photo/photoList')
-
-function* photoSaga(action: PayloadAction) {
-  yield put(requestPhotoList())
+function* photoSaga() {
+  // yield put(loadingStart())
   try {
-    const res: IPhotoState[] = yield call(photoAPI)
-    yield put(requestPhotoListSuccess(res))
+    const photoDatas: IPhotoState[] = yield call(photoAPI)
+    yield put(requestPhotoListSuccess(photoDatas))
   } catch (error) {
-    yield put(requestPhotoLustFailure(error))
+    yield put(requestPhotoListFailure(error))
+  } finally {
+    // yield put(loadingFinish())
   }
 }
 
-function* watchPhotoSaga() {
-  // yield all([takeEvery('REQUEST_PHOTO_LIST', photoSaga())])
+export function* watchPhotoSaga() {
+  yield all([takeLatest(photoActions.requestPhoto, photoSaga)])
 }
-
-export default watchPhotoSaga
