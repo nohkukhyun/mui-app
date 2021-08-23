@@ -39,10 +39,7 @@ const photoSlice = createSlice({
       state.loading = false
       state.photoList = action.payload
     },
-    requestPhotoListFailure: (
-      state: IPhotoInitialState,
-      action: PayloadAction<any>,
-    ) => {
+    requestPhotoListFailure: (state: IPhotoInitialState, action: any) => {
       state.loading = false
       state.error = action.payload
     },

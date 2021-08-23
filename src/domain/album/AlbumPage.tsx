@@ -6,7 +6,7 @@ import { RootState } from 'store/configStore'
 const AlbumPage = () => {
   const [show, setShow] = useState<boolean>(false)
   const dispatch = useDispatch()
-  const { albumsList, selectAlbum } = useSelector(
+  const { albumsList, selectAlbum }: any = useSelector(
     (state: RootState) => state.album,
   )
 
