@@ -27,4 +27,17 @@ const countDown = (time: number) => {
   return `${m}:${s}`
 }
 
-export { reminderTimeToDay, countDown }
+const getServiceTitle = (url: string) => {
+  switch (url) {
+    case 'vlab1':
+      return '스니커즈 관리'
+    case 'vlab2':
+      return '명품 관리'
+    case 'vlab3':
+      return '재고 관리'
+    default:
+      return '서비스'
+  }
+}
+
+export { reminderTimeToDay, countDown, getServiceTitle }
